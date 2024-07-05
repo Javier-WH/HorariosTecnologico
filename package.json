@@ -24,7 +24,9 @@
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
     "@types/sqlite3": "^3.1.11",
+    "antd": "^5.19.1",
     "electron-updater": "^6.1.7",
+    "react-router-dom": "^6.24.1",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
