@@ -1,5 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import AppLayout from '../components/layout/layout'
+import SchedulePanel from '../components/schedulePanel/schedulePanel'
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -12,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Horario</h1>
+        element: <SchedulePanel />
       },
       {
         path: '/teachers',

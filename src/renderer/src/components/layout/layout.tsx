@@ -49,7 +49,7 @@ const App: React.FC = () => {
   } = theme.useToken()
 
   const handleMenuItemClick = (key: React.Key): void => {
-    navigate(key)
+    navigate(String(key))
   }
 
   return (

@@ -35,7 +35,7 @@ export default class Schedule extends DB implements DBinterface {
             FOREIGN KEY (day_of_week_id) REFERENCES day_week(id),
             FOREIGN KEY (hour_of_day_id) REFERENCES hours_day(id),
             UNIQUE (hour_of_day_id, day_of_week_id, classroom_id),
-            UNIQUE (hour_of_day_id, day_of_week_id, teacher_id),
+            UNIQUE (hour_of_day_id, day_of_week_id, teacher_id)
             )
           `
     return new Promise((resolve, reject) => {
