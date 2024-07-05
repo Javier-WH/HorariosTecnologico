@@ -8,6 +8,13 @@ export default class Schedule extends DB implements DBinterface {
   getTableName(): string {
     return this.tableName
   }
+
+  /*
+    el aula no debe estar ocupada en el mismo horario
+    el profesor no debe estar ocupado en el mismo horario
+
+  */
+
   buildTable(): Promise<boolean> {
     const sql = `
             CREATE TABLE IF NOT EXISTS ${this.tableName} (
@@ -27,7 +34,8 @@ export default class Schedule extends DB implements DBinterface {
             FOREIGN KEY (shift_id) REFERENCES shift(id),
             FOREIGN KEY (day_of_week_id) REFERENCES day_week(id),
             FOREIGN KEY (hour_of_day_id) REFERENCES hours_day(id),
-            UNIQUE (hour_of_day_id, day_of_week_id, classroom_id)
+            UNIQUE (hour_of_day_id, day_of_week_id, classroom_id),
+            UNIQUE (hour_of_day_id, day_of_week_id, teacher_id),
             )
           `
     return new Promise((resolve, reject) => {
