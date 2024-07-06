@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
 import { activeTab, getTab } from './layoutChildrens'
-import {
-  ScheduleOutlined,
-  BookOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined
-} from '@ant-design/icons'
+import { ScheduleOutlined, BookOutlined } from '@ant-design/icons'
+import { GrSchedules, GrScheduleNew, GrNotes, GrConfigure } from 'react-icons/gr'
+import { PiChalkboardTeacherLight } from 'react-icons/pi'
+import { TbSchool, TbHelp } from 'react-icons/tb'
+import { TiArrowSyncOutline } from 'react-icons/ti'
+import { GiTeacher } from 'react-icons/gi'
 import type { MenuProps } from 'antd'
 import { Layout, Menu, theme } from 'antd'
 
-const { Content, Footer, Sider } = Layout
+const { Content, Sider } = Layout
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -29,20 +28,33 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Horarios', activeTab.Schedule, <ScheduleOutlined />),
-  getItem('Profesores', activeTab.Teachers, <UserOutlined />),
-  getItem('Pensum', activeTab.Pensum, <BookOutlined />),
-  getItem('User', 'sub1', <BookOutlined />, [
-    getItem('Tom', '4'),
-    getItem('Bill', '5'),
-    getItem('Alex', '6')
+  getItem('Horarios', 'sub-horarios', <ScheduleOutlined />, [
+    getItem('Generar Horarios', activeTab.NewSchedule, <GrScheduleNew />),
+    getItem('Ver Horarios', activeTab.ShowSchedule, <GrSchedules />)
   ]),
-  getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  getItem('Files', '9', <FileOutlined />)
+  getItem('Profesores', 'sub-profesores', <PiChalkboardTeacherLight />, [
+    getItem('Agregar Profesores', activeTab.NewTeachers, <GiTeacher />),
+    getItem('Ver Profesores', activeTab.ShowTeachers, <GrSchedules />)
+  ]),
+  getItem('Pensum', 'sub-pensum', <TbSchool />, [
+    getItem('Agregar Pensum', activeTab.NewPensum, <GrScheduleNew />),
+    getItem('Ver Pensum', activeTab.ShowPensum, <GrSchedules />)
+  ]),
+  getItem('PNF', 'sub-pnf', <BookOutlined />, [
+    getItem('Agregar PNF', activeTab.NewPNF, <GrScheduleNew />),
+    getItem('Ver PNF', activeTab.ShowPNF, <GrSchedules />)
+  ]),
+  getItem('Materias', 'sub-materias', <GrNotes />, [
+    getItem('Agregar Materias', activeTab.NewMaterias, <GrScheduleNew />),
+    getItem('Ver Materias', activeTab.ShowMaterias, <GrSchedules />)
+  ]),
+  getItem('Sincronización', activeTab.Sync, <TiArrowSyncOutline />),
+  getItem('Configuración', activeTab.Config, <GrConfigure />),
+  getItem('Ayuda', activeTab.Help, <TbHelp />)
 ]
 
 const App: React.FC = () => {
-  const [tab, setTab] = useState(activeTab.Schedule)
+  const [tab, setTab] = useState(activeTab.NewSchedule)
   const [collapsed, setCollapsed] = useState(false)
   const {
     token: { colorBgContainer, borderRadiusLG }
@@ -58,7 +70,7 @@ const App: React.FC = () => {
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={[activeTab.NewSchedule]}
           mode="inline"
           items={items}
           onClick={(item) => handleMenuItemClick(item.key)}
@@ -77,9 +89,6 @@ const App: React.FC = () => {
             {getTab(tab)}
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   )

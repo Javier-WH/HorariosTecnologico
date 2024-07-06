@@ -1,0 +1,57 @@
+:root {
+  --font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-color: gray;
+
+}
+.outletContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  gap: 10px;
+}
+
+.input-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  width: 50%;
+  min-width: 500px;
+  max-width: 700px;
+  height: 60px;
+
+}
+
+.input-container > label{
+  font-weight: bold;
+  color:var(--font-color);
+  text-indent: 10px;
+}
+.button-container {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: stretch;
+  width: 50%;
+  min-width: 500px;
+  max-width: 700px;
+  margin-top: 50px
+}
+.outlet-title{
+  color: var(--font-color);
+}
+.error-message{
+  color: red;
+  font-style: italic;
+  text-indent: 10px;
+  font-size: 12px;
+}
+.error-label {
+  color: red !important;
+  font-style: italic;
+}

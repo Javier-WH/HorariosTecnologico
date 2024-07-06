@@ -9,4 +9,6 @@
   background-color: transparent !important;
   display: none !important;
 }
-
+.rbc-current-time-indicator{
+  display: none !important;
+}

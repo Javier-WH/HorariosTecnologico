@@ -12,10 +12,10 @@ export default class Teachers extends DB implements DBinterface {
     const sql = `
             CREATE TABLE IF NOT EXISTS ${this.tableName} (
             id TEXT PRIMARY KEY DEFAULT (RANDOM_UUID()),
-            name TEXT NOT NULL UNIQUE,
-            last_name TEXT NOT NULL UNIQUE,
+            name TEXT NOT NULL,
+            last_name TEXT NOT NULL,
             ci TEXT NOT NULL UNIQUE,
-            status INTEGER NOT NULL UNIQUE,
+            status INTEGER NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP)
           `
     return new Promise((resolve, reject) => {
