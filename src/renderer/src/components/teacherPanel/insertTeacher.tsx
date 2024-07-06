@@ -1,4 +1,4 @@
-import { Radio, Button, Input, InputNumber, message, RadioChangeEvent } from 'antd'
+import { Radio, Button, Input, InputNumber, message, RadioChangeEvent, Modal } from 'antd'
 import { IoPersonAddOutline } from 'react-icons/io5'
 import { MdOutlineCleaningServices } from 'react-icons/md'
 import { useState } from 'react'
@@ -6,8 +6,9 @@ import { GiTeacher } from 'react-icons/gi'
 import Teacher from '@renderer/actors/teacher'
 
 export default function InsertTeacher(): JSX.Element {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [messageApi, contextHolder] = message.useMessage()
-  const [statusValue, setstatusValue] = useState('active')
+  const [statusValue, setstatusValue] = useState(true)
   const [nameValue, setNameValue] = useState('')
   const [lastNameValue, setLastNameValue] = useState('')
   const [cedulaValue, setCedulaValue] = useState('')
@@ -57,28 +58,29 @@ export default function InsertTeacher(): JSX.Element {
     setNameValue('')
     setLastNameValue('')
     setCedulaValue('')
-    setstatusValue('active')
+    setstatusValue(true)
     setErrorCedula(null)
     setErrorName(null)
     setErrorLastName(null)
   }
 
-  const handleInsert = (): void => {
-    const saveTeacher = async (): Promise<void> => {
-      const teacher = new Teacher(nameValue, lastNameValue, cedulaValue, statusValue)
-      const response = await teacher.save()
-      if (response.status) {
-        messageApi.open({
-          type: 'success',
-          content: 'Se ha guardado el profesor',
-          duration: 3
-        })
-        handleClean()
-      } else {
-        console.log(response.message)
-      }
+  const saveTeacher = async (): Promise<void> => {
+    const teacher = new Teacher(nameValue, lastNameValue, cedulaValue, statusValue)
+    const response = await teacher.save()
+    if (response.status) {
+      messageApi.open({
+        type: 'success',
+        content: 'Se ha guardado el profesor',
+        duration: 3
+      })
+      handleClean()
+    } else {
+      messageApi.open({
+        type: 'error',
+        content: response.message,
+        duration: 3
+      })
     }
-    saveTeacher()
   }
 
   const allowInsert = (): boolean => {
@@ -96,6 +98,21 @@ export default function InsertTeacher(): JSX.Element {
   }
   return (
     <>
+      <Modal
+        title="Advertencia"
+        open={isModalOpen}
+        onOk={() => {
+          saveTeacher()
+          setIsModalOpen(false)
+        }}
+        onCancel={() => setIsModalOpen(false)}
+        okText="Agregar"
+        cancelText="Cancelar"
+      >
+        <p>¿Seguro que quieres agregar este profesor?</p>
+        <div>{`Nombre: ${nameValue} ${lastNameValue}`}</div>
+        <div>{`Cedula: ${cedulaValue}`}</div>
+      </Modal>
       {contextHolder}
       <div className="outletContainer">
         <h1 className="outlet-title">
@@ -142,8 +159,8 @@ export default function InsertTeacher(): JSX.Element {
           <label htmlFor="name">Estatus</label>
           <Radio.Group
             options={[
-              { label: 'Activo', value: 'active' },
-              { label: 'Inactivo', value: 'inactive' }
+              { label: 'Activo', value: true },
+              { label: 'Inactivo', value: false }
             ]}
             onChange={onChangeStatus}
             value={statusValue}
@@ -156,7 +173,7 @@ export default function InsertTeacher(): JSX.Element {
             type="primary"
             icon={<IoPersonAddOutline />}
             disabled={!allowInsert()}
-            onClick={handleInsert}
+            onClick={() => setIsModalOpen(true)}
           >
             Agregar
           </Button>

@@ -3,9 +3,9 @@ export default class Teacher {
   private name: string
   private lastName: string
   private cedula: string
-  private status: string
+  private status: boolean
 
-  constructor(name: string, lastName: string, cedula: string, status: string) {
+  constructor(name: string, lastName: string, cedula: string, status: boolean) {
     this.name = name
     this.lastName = lastName
     this.cedula = cedula
@@ -24,7 +24,7 @@ export default class Teacher {
     return this.cedula
   }
 
-  getStatus(): string {
+  getStatus(): boolean {
     return this.status
   }
 
@@ -40,7 +40,7 @@ export default class Teacher {
     this.cedula = cedula
   }
 
-  setStatus(status: string): void {
+  setStatus(status: boolean): void {
     this.status = status
   }
 
@@ -58,7 +58,7 @@ export default class Teacher {
     } catch (err) {
       if (err instanceof Error) {
         if (err.message.includes('UNIQUE constraint failed: teachers.ci')) {
-          return new ActorResponse(false, 'La cedula ya existe', null)
+          return new ActorResponse(false, 'La cedula ya está registrada', null)
         } else {
           return new ActorResponse(false, err.message, null)
         }
