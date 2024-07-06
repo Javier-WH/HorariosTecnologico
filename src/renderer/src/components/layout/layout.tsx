@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { activeTab, getTab } from './layoutChildrens'
 import {
   ScheduleOutlined,
   BookOutlined,
@@ -29,9 +29,9 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Horarios', '/', <ScheduleOutlined />),
-  getItem('Profesores', '/teachers', <UserOutlined />),
-  getItem('Pensum', '3', <BookOutlined />),
+  getItem('Horarios', activeTab.Schedule, <ScheduleOutlined />),
+  getItem('Profesores', activeTab.Teachers, <UserOutlined />),
+  getItem('Pensum', activeTab.Pensum, <BookOutlined />),
   getItem('User', 'sub1', <BookOutlined />, [
     getItem('Tom', '4'),
     getItem('Bill', '5'),
@@ -42,14 +42,14 @@ const items: MenuItem[] = [
 ]
 
 const App: React.FC = () => {
-  const navigate = useNavigate()
+  const [tab, setTab] = useState(activeTab.Schedule)
   const [collapsed, setCollapsed] = useState(false)
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken()
 
   const handleMenuItemClick = (key: React.Key): void => {
-    navigate(String(key))
+    setTab(key.toString())
   }
 
   return (
@@ -74,7 +74,7 @@ const App: React.FC = () => {
               borderRadius: borderRadiusLG
             }}
           >
-            <Outlet />
+            {getTab(tab)}
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>

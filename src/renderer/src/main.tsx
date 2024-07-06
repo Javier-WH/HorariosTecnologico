@@ -1,10 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import router from './router/routerBrowser'
-import { RouterProvider } from 'react-router-dom'
+import Layout from './components/layout/layout'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Layout />
   </React.StrictMode>
 )
+
+/*
+  const ipcHandle = (): void => {
+    const data = { pnf: 'administracion' }
+    window.electron.ipcRenderer
+      .invoke('pnfs-create', data)
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+*/

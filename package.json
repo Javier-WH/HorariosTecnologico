@@ -28,7 +28,6 @@
     "dayjs": "^1.11.11",
     "electron-updater": "^6.1.7",
     "react-big-calendar": "^1.13.0",
-    "react-router-dom": "^6.24.1",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
